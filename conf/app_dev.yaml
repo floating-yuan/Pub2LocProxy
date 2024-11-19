@@ -1,0 +1,18 @@
+locproxy:
+  forward: 127.0.0.1:9910
+  server_addr: 127.0.0.1:9900
+  register_route: /fff
+  user:
+    access_key: "acc"
+    secret: "sss"
+pubproxy:
+  server_addr: 0.0.0.0:9900
+  input_addr: ":9920"
+  user_map:
+    "acc":
+      access_key: "acc"
+      secret: "sss"
+    "bcc":
+      access_key: "bcc"
+      secret: "sss2"
+  

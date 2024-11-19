@@ -1,12 +1,9 @@
-##### Translate to: [简体中文](README_zh.md)
-
 # Pub2LocProxy
-a tool that forward http request from public network to local server.
-
-it can be used when you debugging the notify services in local developing environment like payment notify service and so on.
-
-# How to use it
-## 1. configuration of pubproxy
+一个将HTTP请求从公网转发到本地服务器的工具。 
+ 
+可以用于本地环境调试公网的一些通知回调服务，例如支付通知回调服务等。
+# 如何使用
+## 1. pubproxy的配置文件
 ```yaml
 pubproxy:
   server_addr: 0.0.0.0:9900 #the addr of pubproxy server for locproxy client
@@ -20,7 +17,7 @@ pubproxy:
       secret: "ghi"
 ```
 
-## 2. configuration of localproxy
+## 2. localproxy的配置文件
 ```yaml
 locproxy:
   forward: 127.0.0.1:9910 #the addr of local server
@@ -32,8 +29,8 @@ locproxy:
 
 ```
 
-## 3. start proxy process
-1. `./pub2locproxy pubproxy --config conf/app.yaml`running pubproxy process on server in public network .
+## 3. 启动代理服务的进程
+1. `./pub2locproxy pubproxy --config conf/app.yaml`在公网环境的服务器上运行.
 
 output:
 ```
@@ -43,7 +40,7 @@ ScanConfig: conf/app.yaml
 2024/11/19 23:54:51 addrForClient:  0.0.0.0:9900
 ```
 
-2. `./pub2locproxy locproxy --config conf/app.yaml`running locproxy prcess on local machine and it will connect to the pubproxy server.
+2. `./pub2locproxy locproxy --config conf/app.yaml`在本地机器上运行，启动后它会连接pubproxy服务端.
 
 output in loclproxy console:
 ```
@@ -71,8 +68,8 @@ output in publproxy console:
 2024/11/19 23:56:43 RouteRegistedOK write begin
 ```
 
-## 4. testing
-1. `./pub2locproxy test local-server --address ":9910"`running on local machine.
+## 4. 测试
+1. `./pub2locproxy test local-server --address ":9910"`在本地机器挂起一个测试的本地服务进程.
 
 output:
 ```
@@ -81,7 +78,7 @@ Can't read config: Config File ".cobra" Not Found in "[/Users/yuanfei]"
 2024/11/20 00:03:53 Starting Target HTTP server on:  :9910
 ```
 
-2. `./pub2locproxy test send --url "http://127.0.0.1:9920"`send a http request to pubproxy server.
+2. `./pub2locproxy test send --url "http://127.0.0.1:9920"`发生一个http 请求给pubproxy进程.
 
 ouput:
 ```
@@ -120,8 +117,8 @@ output in locproxy console:
 2024/11/20 00:05:48 proxyServerConn ReadRequest full:
 ```
 
-# How it works
-the request forward path：
+# 如何工作的
+请求转发路径：
 ```mermaid
 graph TB;
 notifyClient("notifyClient")
@@ -144,7 +141,7 @@ localProxy  --"socket"--> publicProxy
 publicProxy  --"http response"--> notifyClient
 ```
 
-Sequence Diagram:
+时序图:
 
 ```mermaid
 sequenceDiagram
